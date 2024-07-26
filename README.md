@@ -1,5 +1,5 @@
-# Hackatoon - Sistema de Saúde
-Sistema de Informação de Saúde
+# Hackathon FIAP
+Sistema de Informações de Saúde
 
 ## O Problema
 
@@ -113,6 +113,21 @@ O microserviço de prontuário fica encarregado de cuidar de todo o fluxo refere
 Os prontuários de cada atendimento são salvos através desse serviço, e o compartilhamento também é feito por ele.
 
 A função deste microserviço é atender exclusivamente o requisito 8.
+
+## Ferramentas
+### CI/CD
+A esteira de CI/CD partindo do Github Actions para integrar o código no ambiente da nuvem. As novas verões da API são enviadas para o ECR antes de publicadas em seus respectivos clusters.
+
+### CloudWatch
+Monitoramento para todos os clusters para a realização do auto scaling.
+
+### Secret Manager
+Cada microserviço deve ter o seu Secret Manager que irá controlar as váriaveis que permitem acesso ao banco de dados.
+
+O banco de dados são inicializados com o recurso `aws_secretsmanager_secret_rotation` para que as chaves de segurança sejam rotacionadas e armazenadas no secret manager.
+
+### Data Replication Service
+No diagram existe o data replication services adicionado para eventos de migrações de dados nas mudanças de fases caso isso se faça necessário por algum motivo, e também para habilitar os serviços de escalonamento das bases de dados.
 
 ## Database
 Para banco de dados foi escolhido o uso de uma solução relacional para utilizarmos relacionamentos no intuito criar de dificultar orfãos, especialmente nos prontuários e documentos, dificultando ainda mais erros nessas operações.
@@ -236,7 +251,7 @@ Responsável por persistir as permissões de compartilhamento de documentos.
 
 ## Linguagem Ubiqua
 
-**Profissional**: Pessoa cadastrada no sistema e habilitada na área da saúde para fornecer serviços de saúde.
+**Profissional**: Pessoa cadastrada no sistema e habilitada na área da saúde para fornecer serviços de saúde. Subsitui a denominação "Medico" dos documentos, uma vez que nem todo profissional de saúde é médico e/ou vinculado ao CRM.
 
 **Paciente**: Pessoa cadastrada no sistema como usuário de serviços de saúde.
 
